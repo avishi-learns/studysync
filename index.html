@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StudySync</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Roboto&family=Poppins&family=Montserrat&family=Playfair+Display&family=Dancing+Script&family=Pacifico&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+
+  
+  <div class="font-poppins">
+  <h1>Study Sync</h1>
+  <h2 style="font-family: 'Pacifico', cursive;">Your syllabus planner</h2>
+</div>
+<!-- CUSTOMIZATION PANEL -->
+  <div class="customize-panel">
+    <label>Theme Color</label>
+    <input type="color" id="themeColor">
+
+    <label>Font Style</label> 
+    <select id="fontSelect">
+  <option value="font-inter">Inter</option>
+  <option value="font-poppins">Poppins</option>
+  <option value="font-montserrat">Montserrat</option>
+  <option value="font-playfair">Playfair Display</option>
+  <option value="font-dancing">Dancing Script</option>
+  <option value="font-pacifico">Pacifico</option>
+</select>
+  </div>
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <!-- subject cards here -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+
+  <!-- SUBJECT SECTION -->
+  <section class="box">
+    <h2>Add Subject</h2>
+    <input id="subjectInput" type="text" placeholder="e.g. English">
+    <button id="addSubjectBtn">Add Subject</button>
+
+    <ul id="subjectList">
+      <!-- Subjects appear here -->
+    </ul>
+  </section>
+  <select id="fontSelector">
+  <option value="font-inter">Inter</option>
+  <option value="font-poppins">Poppins</option>
+  <option value="font-playfair">Playfair</option>
+</select>
+
+
+  <!-- TOPIC SECTION -->
+  <section class="box">
+    <h2 id="activeSubjectTitle">Select a subject</h2>
+
+    <input id="topicInput" type="text" placeholder="e.g. Poetry – Flamingo">
+    <button id="addTopicBtn">Add Topic</button>
+
+    <ul id="topicList">
+      <!-- Topics with checkboxes appear here -->
+    </ul>
+
+    <p id="progressText"></p>
+  </section>
+
+  <!-- JS will be written by teammate -->
+  <script src="script.js"></script>
+
+</body>
+</html>

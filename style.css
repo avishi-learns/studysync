@@ -1,0 +1,49 @@
+:root {
+  --primary-color: #5b6cff;
+  --bg-color: #f6f7fb;
+  --font-family: Arial, sans-serif;
+}
+
+body {
+  background: var(--bg-color);
+  font-family: var(--font-family);
+}
+
+button {
+  background: var(--primary-color);
+}
+
+h1 {
+  color: #333;
+}
+
+section {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  cursor: pointer;
+}
+button {
+  background: var(--primary-color);
+}
+.font-arial { font-family: Arial, sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+.font-roboto { font-family: 'Roboto', sans-serif; }
+
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-montserrat { font-family: 'Montserrat', sans-serif; }
+
+.font-times { font-family: 'Times New Roman', serif; }
+.font-playfair { font-family: 'Playfair Display', serif; }
+
+.font-dancing { font-family: 'Dancing Script', cursive; }
+.font-pacifico { font-family: 'Pacifico', cursive; }
