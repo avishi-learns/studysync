@@ -1,4 +1,25 @@
 :root {
+  --bg-color: #f8f9fa;
+  --text-color: #1f2937;
+  --card-bg: #ffffff;
+}
+
+.dark {
+  --bg-color: #0f172a;
+  --text-color: #e5e7eb;
+  --card-bg: #1e293b;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card {
+  background: var(--card);
+}
+
+:root {
   --bg: #f7f7fb;
   --card: #ffffff;
   --primary: #5b6cff;
