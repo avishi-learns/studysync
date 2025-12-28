@@ -33,27 +33,47 @@
         <h2>Study Dashboard</h2>
         <p>Plan, track, and grow consistently</p>
       </section>
-
-    <!-- ADD SUBJECT -->
-    <section class="card">
+   <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="tabs">
+      <button onclick="showView('dashboard')">Dashboard</button>
+      <button onclick="showView('planner')">Planner</button>
+      <button onclick="showView('progress')">Progress</button>
+    </div>
+    <button onclick="toggleTheme()">🌗</button>
+  </div>
+   <!-- DASHBOARD -->
+  <section id="dashboard" class="view active">
+     <div class="card">
       <h3>Add Subject</h3>
-      <input type="text" id="subjectInput" placeholder="e.g. Physics">
-      <button onclick="addSubject()">Add Subject</button>
-    </section>
+      <input id="subjectInput" placeholder="e.g. Physics">
+      <button onclick="addSubject()">Add</button>
+    </div>
 
+    <div id="subjectsContainer"></div>
+
+  </section>
+  <!-- PLANNER -->
+  <section id="planner" class="view">
+    <h2>Today's Planner</h2>
+    <div id="todayTasks"></div>
+  </section>
     <!-- PROGRESS -->
-    <section class="card">
-      <h3>Overall Progress</h3>
+  <section id="progress" class="view">
+    <h2>Progress Overview</h2>
+
+    <div class="card">
+      <h4>Overall Progress</h4>
       <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
+        <div id="overallProgress" class="progress-fill"></div>
       </div>
-      <span id="progressText">0%</span>
-    </section>
+      <span id="overallText">0%</span>
+    </div>
 
-    <!-- SUBJECTS AREA -->
-    <section id="subjectsContainer"></section>
+    <div id="subjectProgress"></div>
+  </section>
 
-  </main>
+</main>
 
 </div>
 </body>
