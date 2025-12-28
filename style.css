@@ -1,13 +1,21 @@
 :root {
-  --bg-color: #f8f9fa;
-  --text-color: #1f2937;
+  --bg-color: #f8fafc;
+  --text-color: #111827;
   --card-bg: #ffffff;
+  --accent: #6366f1;
+  --primary: #5b6cff;
+  --primary-soft: #eef0ff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 14px;
 }
 
 .dark {
   --bg-color: #0f172a;
   --text-color: #e5e7eb;
   --card-bg: #1e293b;
+  --accent: #818cf8;
 }
 
 body {
@@ -16,19 +24,9 @@ body {
 }
 
 .card {
-  background: var(--card);
+  background: var(--card-bg);
 }
-
-:root {
-  --bg: #f7f7fb;
-  --card: #ffffff;
-  --primary: #5b6cff;
-  --primary-soft: #eef0ff;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --radius: 14px;
-}
+  
 
 * {
   box-sizing: border-box;
