@@ -1,49 +1,111 @@
-:root {
-  --primary-color: #5b6cff;
-  --bg-color: #f6f7fb;
-  --font-family: Arial, sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
-  background: var(--bg-color);
-  font-family: var(--font-family);
+  margin: 0;
+  background: #f6f5f3;
+  color: #2e2e2e;
 }
 
-button {
-  background: var(--primary-color);
+.app {
+  display: flex;
+  min-height: 100vh;
 }
 
-h1 {
-  color: #333;
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  padding: 30px 20px;
+  border-right: 1px solid #e0e0e0;
 }
 
-section {
-  background: white;
-  padding: 15px;
-  margin-bottom: 20px;
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  margin-bottom: 40px;
+}
+
+.sidebar nav a {
+  display: block;
+  margin-bottom: 18px;
+  color: #555;
+  text-decoration: none;
+}
+
+/* MAIN */
+.content {
+  flex: 1;
+  padding: 40px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header p {
+  color: #777;
+  margin-top: 6px;
+}
+
+/* CARDS */
+.card {
+  background: #ffffff;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+input {
+  padding: 10px;
+  width: 60%;
+  margin-right: 10px;
   border-radius: 8px;
-}
-
-input, button {
-  padding: 8px;
-  margin: 5px 0;
+  border: 1px solid #ddd;
 }
 
 button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2e2e2e;
+  color: white;
   cursor: pointer;
 }
-button {
-  background: var(--primary-color);
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e6e6e6;
+  border-radius: 10px;
+  margin: 12px 0;
 }
-.font-arial { font-family: Arial, sans-serif; }
-.font-inter { font-family: 'Inter', sans-serif; }
-.font-roboto { font-family: 'Roboto', sans-serif; }
 
-.font-poppins { font-family: 'Poppins', sans-serif; }
-.font-montserrat { font-family: 'Montserrat', sans-serif; }
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #2e2e2e;
+  border-radius: 10px;
+  transition: 0.3s;
+}
 
-.font-times { font-family: 'Times New Roman', serif; }
-.font-playfair { font-family: 'Playfair Display', serif; }
+/* SUBJECTS */
+.subject {
+  margin-bottom: 20px;
+}
 
-.font-dancing { font-family: 'Dancing Script', cursive; }
-.font-pacifico { font-family: 'Pacifico', cursive; }
+.subject h4 {
+  margin-bottom: 10px;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
