@@ -46,7 +46,7 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-  width: 250px;
+  width: 260px;
   background: var(--card);
   padding: 28px 22px;
   border-right: 1px solid var(--border);
@@ -103,9 +103,7 @@ main {
   border-radius: 6px;
 }
 
-.topic {
-  margin-left: 20px;
-}
+
 
 
 /* CARDS */
@@ -199,11 +197,24 @@ button:hover {
   display: block;
 }
 
-/* TOP BAR */
 .top-bar {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
+}
+.nav-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+#themeToggle {
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: #5f6fff;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .tabs button {
@@ -251,4 +262,16 @@ body.dark input {
 .nav-item.active {
   background-color: #6c7cff;
   color: white;
+}
+.main-content {
+  padding: 40px 50px;
+  margin-left: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.section {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
