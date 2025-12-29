@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <title>StudySync</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -33,13 +31,13 @@
         <button onclick="showView('dashboard')">Dashboard</button>
         <button onclick="showView('planner')">Planner</button>
         <button onclick="showView('progress')">Progress</button>
-        <button onclick="showSection('syllabus')">Syllabus</button>
       </div>
       <button id="themeToggle">🌙 Dark Mode</button>
     </div>
 
     <!-- DASHBOARD -->
     <section id="dashboard" class="view active">
+
       <div class="card">
         <h3>Add Subject</h3>
         <input id="subjectInput" placeholder="e.g. Physics">
@@ -47,6 +45,16 @@
       </div>
 
       <div id="subjectsContainer"></div>
+
+      <!-- TASKS -->
+      <div class="card" id="taskSection" style="display:none;">
+        <h3>Add Task</h3>
+        <input id="taskInput" placeholder="e.g. Laws of Motion">
+        <button onclick="addTask()">Add Task</button>
+
+        <div id="taskList"></div>
+      </div>
+
     </section>
 
     <!-- PLANNER -->
@@ -66,21 +74,13 @@
         </div>
         <span id="overallText">0%</span>
       </div>
-
-      <div id="subjectProgress"></div>
     </section>
 
     <!-- SYLLABUS -->
-    <section id="syllabus" class="section">
+    <section id="syllabus" class="view">
       <h2>Syllabus</h2>
-
-      <div class="card">
-        <input id="subjectInput" placeholder="Add subject (e.g. Physics)" />
-        <button onclick="addSubject()">Add Subject</button>
-      </div>
-
-      <div id="subjectsContainer"></div>
-      </section>
+      <p>Coming soon</p>
+    </section>
 
   </main>
 </div>
