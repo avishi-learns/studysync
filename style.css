@@ -46,7 +46,7 @@ body {
 
 /* SIDEBAR */
 .sidebar {
-  width: 260px;
+  width: 250px;
   background: var(--card);
   padding: 28px 22px;
   border-right: 1px solid var(--border);
@@ -91,6 +91,22 @@ body {
 .section {
   display: none;
 }
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+.subject, .chapter {
+  background: white;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.topic {
+  margin-left: 20px;
+}
+
 
 /* CARDS */
 .card {
@@ -221,4 +237,18 @@ body.dark input {
   background: #333;
   color: white;
   border: 1px solid #555;
+}
+.nav-item {
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #555;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.nav-item.active {
+  background-color: #6c7cff;
+  color: white;
 }
