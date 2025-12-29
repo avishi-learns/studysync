@@ -1,100 +1,177 @@
-let subjects = [];
-
 document.addEventListener("DOMContentLoaded", () => {
-  showView("dashboard");
 
+  let subjects = [];
+  let selectedSubjectId = null;
+
+  /* ---------------- NAV ---------------- */
   document.querySelectorAll(".nav-link").forEach(link => {
     link.addEventListener("click", () => {
       showView(link.dataset.section);
     });
   });
-});
 
-function showView(id) {
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+  function showView(id) {
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 
-  document.querySelectorAll(".nav-link").forEach(l => {
-    l.classList.toggle("active", l.dataset.section === id);
-  });
-}
+    document.querySelectorAll(".nav-link").forEach(l =>
+      l.classList.toggle("active", l.dataset.section === id)
+    );
 
-function addSubject() {
-  const input = document.getElementById("subjectInput");
-  const name = input.value.trim();
-  if (!name) return;
+    if (id === "planner") renderTodayTasks();
+  }
 
-  subjects.push({ id: Date.now(), name, done: 0, total: 10 });
-  input.value = "";
-  renderSubjects();
-  updateProgress();
-}
+  /* ---------------- SUBJECTS ---------------- */
+  window.addSubject = function () {
+    const input = document.getElementById("subjectInput");
+    if (!input.value.trim()) return;
 
-function renderSubjects() {
-  const container = document.getElementById("subjectsContainer");
-  container.innerHTML = "";
+    subjects.push({
+      id: Date.now(),
+      name: input.value.trim(),
+      tasks: []
+    });
 
-  subjects.forEach(s => {
-    container.innerHTML += `
-      <div class="card">
-        <h3>${s.name}</h3>
-        <p>${s.done}/${s.total}</p>
-        <button onclick="inc(${s.id})">+ Progress</button>
-      </div>
-    `;
-  });
-
-  renderProgressPage();
-}
-
-function inc(id) {
-  const s = subjects.find(x => x.id === id);
-  if (s && s.done < s.total) {
-    s.done++;
+    input.value = "";
     renderSubjects();
-    updateProgress();
-  }
-}
+  };
 
-function updateProgress() {
-  const bar = document.getElementById("overallProgress");
-  const text = document.getElementById("overallText");
+  window.selectSubject = function (id) {
+    selectedSubjectId = id;
+    renderSubjects();
+    renderTasks();
+  };
 
-  if (subjects.length === 0) {
-    bar.style.width = "0%";
-    text.textContent = "0%";
-    return;
-  }
+  function renderSubjects() {
+    const c = document.getElementById("subjectsContainer");
+    c.innerHTML = "";
 
-  let d = 0, t = 0;
-  subjects.forEach(s => { d += s.done; t += s.total; });
+    subjects.forEach(s => {
+      const done = s.tasks.filter(t => t.done).length;
+      const total = s.tasks.length || 1;
+      const percent = Math.round((done / total) * 100);
 
-  const p = Math.round((d / t) * 100);
-  bar.style.width = p + "%";
-  text.textContent = p + "%";
-}
-
-function renderProgressPage() {
-  const container = document.getElementById("subjectProgress");
-  container.innerHTML = "";
-
-  subjects.forEach(s => {
-    const p = Math.round((s.done / s.total) * 100);
-    container.innerHTML += `
-      <div class="card">
-        <h4>${s.name}</h4>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${p}%"></div>
+      c.innerHTML += `
+        <div class="card ${selectedSubjectId === s.id ? "active-subject" : ""}">
+          <h3>${s.name}</h3>
+          <p>${done}/${total}</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${percent}%"></div>
+          </div>
+          <button onclick="selectSubject(${s.id})">Select</button>
         </div>
-        ${p}%
-      </div>
-    `;
-  });
-}
+      `;
+    });
 
-const themeBtn = document.getElementById("themeToggle");
-themeBtn.onclick = () => {
-  document.body.classList.toggle("dark");
-  themeBtn.textContent =
-    document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
-};
+    updateOverallProgress();
+    renderTodayTasks();
+  }
+
+  /* ---------------- TASKS ---------------- */
+  window.addTask = function () {
+    if (selectedSubjectId === null) return;
+
+    const input = document.getElementById("taskInput");
+    if (!input.value.trim()) return;
+
+    const subject = subjects.find(s => s.id === selectedSubjectId);
+    subject.tasks.push({ text: input.value.trim(), done: false });
+
+    input.value = "";
+    renderTasks();
+    renderSubjects();
+  };
+
+  function renderTasks() {
+    const section = document.getElementById("taskSection");
+    const list = document.getElementById("taskList");
+
+    if (selectedSubjectId === null) {
+      section.style.display = "none";
+      return;
+    }
+
+    section.style.display = "block";
+    list.innerHTML = "";
+
+    const subject = subjects.find(s => s.id === selectedSubjectId);
+
+    subject.tasks.forEach((t, i) => {
+      list.innerHTML += `
+        <div class="task">
+          <input type="checkbox" ${t.done ? "checked" : ""}
+            onchange="toggleTask(${i})">
+          <span>${t.text}</span>
+        </div>
+      `;
+    });
+  }
+
+  window.toggleTask = function (i) {
+    const subject = subjects.find(s => s.id === selectedSubjectId);
+    subject.tasks[i].done = !subject.tasks[i].done;
+
+    renderTasks();
+    renderSubjects();
+  };
+
+  /* ---------------- PLANNER ---------------- */
+  function renderTodayTasks() {
+    const container = document.getElementById("todayTasks");
+    container.innerHTML = "";
+
+    let hasTasks = false;
+
+    subjects.forEach(subject => {
+      subject.tasks.forEach(task => {
+        if (!task.done) {
+          hasTasks = true;
+          container.innerHTML += `
+            <div class="task">
+              <input type="checkbox"
+                onchange="markFromPlanner(${subject.id}, '${task.text}')">
+              <strong>${subject.name}:</strong> ${task.text}
+            </div>
+          `;
+        }
+      });
+    });
+
+    if (!hasTasks) {
+      container.innerHTML = "<p>🎉 No pending tasks for today!</p>";
+    }
+  }
+
+  window.markFromPlanner = function (subjectId, taskText) {
+    const subject = subjects.find(s => s.id === subjectId);
+    const task = subject.tasks.find(t => t.text === taskText);
+    task.done = true;
+
+    renderSubjects();
+    renderTasks();
+    renderTodayTasks();
+  };
+
+  /* ---------------- PROGRESS ---------------- */
+  function updateOverallProgress() {
+    let done = 0, total = 0;
+
+    subjects.forEach(s => {
+      done += s.tasks.filter(t => t.done).length;
+      total += s.tasks.length;
+    });
+
+    const p = total === 0 ? 0 : Math.round((done / total) * 100);
+    document.getElementById("overallProgress").style.width = p + "%";
+    document.getElementById("overallText").textContent = p + "%";
+  }
+
+  /* ---------------- DARK MODE ---------------- */
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+  });
+
+  /* ---------------- INITIAL ---------------- */
+  renderTodayTasks();
+
+});
