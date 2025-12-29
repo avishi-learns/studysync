@@ -1,151 +1,100 @@
-/* ---------- NAVIGATION ---------- */
-const navLinks = document.querySelectorAll(".nav-link");
-const sections = document.querySelectorAll(".section");
+let subjects = [];
 
-navLinks.forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.forEach(l => l.classList.remove("active"));
-    link.classList.add("active");
+document.addEventListener("DOMContentLoaded", () => {
+  showView("dashboard");
 
-    const target = link.dataset.section;
-    sections.forEach(sec => {
-      sec.style.display = sec.id === target ? "block" : "none";
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", () => {
+      showView(link.dataset.section);
     });
   });
 });
 
-/* Default view */
-sections.forEach(sec => sec.style.display = "none");
-document.getElementById("dashboard").style.display = "block";
+function showView(id) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 
-/* ---------- MEMORY ---------- */
-function saveData() {
-  const subjects = [];
-
-  document.querySelectorAll(".subject").forEach(subject => {
-    const name = subject.querySelector("h4").childNodes[0].nodeValue.trim();
-    const tasks = [];
-
-    subject.querySelectorAll(".task").forEach(task => {
-      tasks.push({
-        text: task.querySelector("span").innerText,
-        done: task.querySelector(".task-check").checked
-      });
-    });
-
-    subjects.push({ name, tasks });
+  document.querySelectorAll(".nav-link").forEach(l => {
+    l.classList.toggle("active", l.dataset.section === id);
   });
-
-  localStorage.setItem("studysync-data", JSON.stringify(subjects));
 }
 
-function loadData() {
-  const data = JSON.parse(localStorage.getItem("studysync-data"));
-  if (!data) return;
+function addSubject() {
+  const input = document.getElementById("subjectInput");
+  const name = input.value.trim();
+  if (!name) return;
 
-  const container = document.getElementById("subjectsContainer");
-  container.innerHTML = "";
-
-  data.forEach(subject => {
-    const card = document.createElement("section");
-    card.className = "card subject";
-
-    card.innerHTML = `
-      <h4>${subject.name}</h4>
-      <div class="tasks"></div>
-      <button onclick="addTask(this)">+ Add Topic</button>
-    `;
-
-    const tasksDiv = card.querySelector(".tasks");
-
-    subject.tasks.forEach(t => {
-      const task = document.createElement("div");
-      task.className = "task";
-      task.innerHTML = `
-        <input type="checkbox" class="task-check" ${t.done ? "checked" : ""}>
-        <span contenteditable="true">${t.text}</span>
-        <button onclick="deleteTask(this)">🗑</button>
-      `;
-      tasksDiv.appendChild(task);
-    });
-
-    container.appendChild(card);
-  });
-
+  subjects.push({ id: Date.now(), name, done: 0, total: 10 });
+  input.value = "";
+  renderSubjects();
   updateProgress();
 }
 
-/* ---------- SUBJECT & TASK ---------- */
-function addSubject() {
-  const input = document.getElementById("subjectInput");
-  if (!input.value.trim()) return;
+function renderSubjects() {
+  const container = document.getElementById("subjectsContainer");
+  container.innerHTML = "";
 
-  const card = document.createElement("section");
-  card.className = "card subject";
-  card.innerHTML = `
-    <h4>${input.value}</h4>
-    <div class="tasks"></div>
-    <button onclick="addTask(this)">+ Add Topic</button>
-  `;
+  subjects.forEach(s => {
+    container.innerHTML += `
+      <div class="card">
+        <h3>${s.name}</h3>
+        <p>${s.done}/${s.total}</p>
+        <button onclick="inc(${s.id})">+ Progress</button>
+      </div>
+    `;
+  });
 
-  document.getElementById("subjectsContainer").appendChild(card);
-  input.value = "";
-  saveData();
+  renderProgressPage();
 }
 
-function addTask(btn) {
-  const tasksDiv = btn.previousElementSibling;
-  const task = document.createElement("div");
-
-  task.className = "task";
-  task.innerHTML = `
-    <input type="checkbox" class="task-check">
-    <span contenteditable="true">New Topic</span>
-    <button onclick="deleteTask(this)">🗑</button>
-  `;
-
-  tasksDiv.appendChild(task);
-  saveData();
+function inc(id) {
+  const s = subjects.find(x => x.id === id);
+  if (s && s.done < s.total) {
+    s.done++;
+    renderSubjects();
+    updateProgress();
+  }
 }
 
-function deleteTask(btn) {
-  btn.parentElement.remove();
-  saveData();
-}
-
-/* ---------- PROGRESS ---------- */
 function updateProgress() {
-  const all = document.querySelectorAll(".task-check");
-  const done = document.querySelectorAll(".task-check:checked");
+  const bar = document.getElementById("overallProgress");
+  const text = document.getElementById("overallText");
 
-  const percent = all.length === 0 ? 0 : Math.round((done.length / all.length) * 100);
-  document.getElementById("progressText").innerText = percent + "%";
-  document.getElementById("progressFill").style.width = percent + "%";
+  if (subjects.length === 0) {
+    bar.style.width = "0%";
+    text.textContent = "0%";
+    return;
+  }
+
+  let d = 0, t = 0;
+  subjects.forEach(s => { d += s.done; t += s.total; });
+
+  const p = Math.round((d / t) * 100);
+  bar.style.width = p + "%";
+  text.textContent = p + "%";
 }
 
-/* ---------- AI PLANNER ---------- */
-function generatePlan() {
-  const hours = parseInt(document.getElementById("studyTime").value);
-  if (!hours) return;
+function renderProgressPage() {
+  const container = document.getElementById("subjectProgress");
+  container.innerHTML = "";
 
-  const out = document.getElementById("planOutput");
-  out.innerHTML = "";
-
-  document.querySelectorAll(".subject").forEach(subject => {
-    const name = subject.querySelector("h4").innerText;
-    const pending = subject.querySelectorAll(".task-check:not(:checked)").length;
-
-    if (pending && hours > 0) {
-      out.innerHTML += `<li>📘 ${name}: ${Math.min(pending, hours)} topic(s)</li>`;
-    }
+  subjects.forEach(s => {
+    const p = Math.round((s.done / s.total) * 100);
+    container.innerHTML += `
+      <div class="card">
+        <h4>${s.name}</h4>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:${p}%"></div>
+        </div>
+        ${p}%
+      </div>
+    `;
   });
 }
 
-document.addEventListener("change", e => {
-  if (e.target.classList.contains("task-check")) {
-    updateProgress();
-    saveData();
-  }
-});
-
-loadData();
+const themeBtn = document.getElementById("themeToggle");
+themeBtn.onclick = () => {
+  document.body.classList.toggle("dark");
+  themeBtn.textContent =
+    document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
+};

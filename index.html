@@ -11,8 +11,7 @@
 </head>
 
 <body>
-
- <div class="app">
+<div class="app">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -21,65 +20,71 @@
       <a class="nav-link active" data-section="dashboard">Dashboard</a>
       <a class="nav-link" data-section="planner">Planner</a>
       <a class="nav-link" data-section="progress">Progress</a>
-      <a class="nav-item">📘 Syllabus</a>
+      <a class="nav-link" data-section="syllabus">📘 Syllabus</a>
+    </nav>
   </aside>
 
+  <!-- MAIN -->
+  <main class="content">
 
-    <!-- HEADER -->
-    <section class="section" id="dashboard">
-      <section class="header">
-        <h2>Study Dashboard</h2>
-        <p>Plan, track, and grow consistently</p>
-      </section>
-   <!-- TOP BAR -->
-  <div class="top-bar">
-    <div class="tabs">
-      <button onclick="showView('dashboard')">Dashboard</button>
-      <button onclick="showView('planner')">Planner</button>
-      <button onclick="showView('progress')">Progress</button>
-      <button onclick="showPage('syllabus')" class="nav-btn">Syllabus</button>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="tabs">
+        <button onclick="showView('dashboard')">Dashboard</button>
+        <button onclick="showView('planner')">Planner</button>
+        <button onclick="showView('progress')">Progress</button>
+        <button onclick="showSection('syllabus')">Syllabus</button>
       </div>
-    <button id="themeToggle">🌙 Dark Mode</button>
-  </div>
-   <!-- DASHBOARD -->
-  <section id="dashboard" class="view active">
-     <div class="card">
-      <h3>Add Subject</h3>
-      <input id="subjectInput" placeholder="e.g. Physics">
-      <button onclick="addSubject()">Add</button>
+      <button id="themeToggle">🌙 Dark Mode</button>
     </div>
 
-    <div id="subjectsContainer"></div>
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="view active">
+      <div class="card">
+        <h3>Add Subject</h3>
+        <input id="subjectInput" placeholder="e.g. Physics">
+        <button onclick="addSubject()">Add</button>
+      </div>
 
-  </section>
-  <div class="main-content">
-  <!-- top bar -->
-  <!-- dashboard / planner / progress / syllabus sections -->
-</div>
+      <div id="subjectsContainer"></div>
+    </section>
 
-  <!-- PLANNER -->
-  <section id="planner" class="view">
-    <h2>Today's Planner</h2>
-    <div id="todayTasks"></div>
-  </section>
+    <!-- PLANNER -->
+    <section id="planner" class="view">
+      <h2>Today's Planner</h2>
+      <div id="todayTasks"></div>
+    </section>
+
     <!-- PROGRESS -->
-  <section id="progress" class="view">
-    <h2>Progress Overview</h2>
+    <section id="progress" class="view">
+      <h2>Progress Overview</h2>
 
-    <div class="card">
-      <h4>Overall Progress</h4>
-      <div class="progress-bar">
-        <div id="overallProgress" class="progress-fill"></div>
+      <div class="card">
+        <h4>Overall Progress</h4>
+        <div class="progress-bar">
+          <div id="overallProgress" class="progress-fill"></div>
+        </div>
+        <span id="overallText">0%</span>
       </div>
-      <span id="overallText">0%</span>
-    </div>
 
-    <div id="subjectProgress"></div>
-  </section>
+      <div id="subjectProgress"></div>
+    </section>
 
-</main>
+    <!-- SYLLABUS -->
+    <section id="syllabus" class="section">
+      <h2>Syllabus</h2>
 
+      <div class="card">
+        <input id="subjectInput" placeholder="Add subject (e.g. Physics)" />
+        <button onclick="addSubject()">Add Subject</button>
+      </div>
+
+      <div id="subjectsContainer"></div>
+      </section>
+
+  </main>
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
