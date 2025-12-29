@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <title>StudySync</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,6 +37,7 @@
 
     <!-- DASHBOARD -->
     <section id="dashboard" class="view active">
+
       <div class="card">
         <h3>Add Subject</h3>
         <input id="subjectInput" placeholder="e.g. Physics">
@@ -46,6 +45,16 @@
       </div>
 
       <div id="subjectsContainer"></div>
+
+      <!-- TASKS -->
+      <div class="card" id="taskSection" style="display:none;">
+        <h3>Add Task</h3>
+        <input id="taskInput" placeholder="e.g. Laws of Motion">
+        <button onclick="addTask()">Add Task</button>
+
+        <div id="taskList"></div>
+      </div>
+
     </section>
 
     <!-- PLANNER -->
@@ -65,8 +74,6 @@
         </div>
         <span id="overallText">0%</span>
       </div>
-
-      <div id="subjectProgress"></div>
     </section>
 
     <!-- SYLLABUS -->
